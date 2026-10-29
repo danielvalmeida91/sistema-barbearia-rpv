@@ -1,0 +1,12 @@
+POST http://localhost:3000/empresas
+Content-Type: application/json
+Test: Daniel
+
+{
+    "nome": "Barbearia do Renan",
+    "cnpj": "7Y.G43.BY2/0001-05"
+}
+
+### 
+
+GET http://localhost:3000/empresas

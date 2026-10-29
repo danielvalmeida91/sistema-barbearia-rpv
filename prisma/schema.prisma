@@ -11,3 +11,88 @@ generator client {
 datasource db {
   provider = "mysql"
 }
+
+model Empresa {
+  id            Int            @id @default(autoincrement())
+  nome          String
+  cnpj          String         @unique
+  telefone      String?
+  ativa         Boolean        @default(true)
+  criadoEm      DateTime       @default(now())
+  clientes      Cliente[]
+  profissionais Profissional[]
+  servicos      Servico[]
+  agendamentos  Agendamento[]
+
+  @@map("empresas")
+}
+
+model Cliente {
+  id           Int           @id @default(autoincrement())
+  nome         String
+  telefone     String
+  criadoEm     DateTime      @default(now())
+  empresa      Empresa?      @relation(fields: [empresaId], references: [id])
+  empresaId    Int?
+  agendamentos Agendamento[]
+
+  @@unique([empresaId, telefone])
+  @@map("clientes")
+}
+
+model Profissional {
+  id           Int           @id @default(autoincrement())
+  nome         String
+  ativo        Boolean       @default(true)
+  empresa      Empresa?      @relation(fields: [empresaId], references: [id])
+  empresaId    Int?
+  agendamentos Agendamento[]
+
+  @@map("profissionais")
+}
+
+model Servico {
+  id           Int                  @id @default(autoincrement())
+  nome         String
+  ativo        Boolean              @default(true)
+  empresa      Empresa?             @relation(fields: [empresaId], references: [id])
+  empresaId    Int?
+  agendamentos AgendamentoServico[]
+
+  @@map("servicos")
+}
+
+enum StatusAgendamento {
+  AGENDADO
+  CONCLUIDO
+  CANCELADO
+  FALTOU
+}
+
+model Agendamento {
+  id             Int                  @id @default(autoincrement())
+  inicio         DateTime
+  fim            DateTime
+  status         StatusAgendamento    @default(AGENDADO)
+  criadoEm       DateTime             @default(now())
+  empresa        Empresa?             @relation(fields: [empresaId], references: [id])
+  empresaId      Int?
+  cliente        Cliente?             @relation(fields: [clienteId], references: [id])
+  clienteId      Int?
+  profissional   Profissional?        @relation(fields: [profissionalId], references: [id])
+  profissionalId Int?
+  servicos       AgendamentoServico[]
+
+  @@map("agendamentos")
+}
+
+model AgendamentoServico {
+  precoCobrado  Float
+  servico       Servico?     @relation(fields: [servicoId], references: [id])
+  servicoId     Int
+  agendamento   Agendamento? @relation(fields: [agendamentoId], references: [id])
+  agendamentoId Int
+
+  @@id([agendamentoId, servicoId])
+  @@map("agendamento_servicos")
+}
