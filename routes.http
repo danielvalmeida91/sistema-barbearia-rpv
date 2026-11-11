@@ -15,7 +15,6 @@ GET http://localhost:3000/empresas
 
 POST http://localhost:3000/clientes
 Content-Type: application/json
-x-empresa-id: 2
 
 {
     "nome": "Daniel",
@@ -23,15 +22,14 @@ x-empresa-id: 2
 }
 
 ###
-
 GET http://localhost:3000/clientes
 Content-Type: application/json
 x-empresa-id: 3
 
 ###
-GET http://localhost:3000/clientes/1
+GET http://localhost:3000/clientes/2
 Content-Type: application/json
-x-empresa-id: 1
+x-empresa-id: 2
 
 ###
 PATCH http://localhost:3000/clientes/1
@@ -46,3 +44,11 @@ x-empresa-id: 1
 DELETE http://localhost:3000/clientes/1
 Content-Type: application/json
 x-empresa-id: 1
+
+###
+POST http://localhost:3000/profissionais
+Content-Type: application/json
+
+{
+    "nome": "Daniel"
+}

@@ -1,11 +1,22 @@
 import { Injectable } from '@nestjs/common';
-import { CreateProfissionaiDto } from './dto/create-profissionai.dto.js';
-import { UpdateProfissionaiDto } from './dto/update-profissionai.dto.js';
+import { CreateProfissionaisDto } from './dto/create-profissional.dto.js';
+import { UpdateProfissionaisDto } from './dto/update-profissional.dto.js';
+import { PrismaService } from '../prisma/prisma.service.js';
+import { EmpresasService } from '../empresas/empresas.service.js';
 
 @Injectable()
 export class ProfissionaisService {
-  create(createProfissionaiDto: CreateProfissionaiDto) {
-    return 'This action adds a new profissionai';
+  constructor(
+    private readonly prisma: PrismaService,
+    private readonly empresas: EmpresasService
+  ) { }
+
+  async create(empresaId: number, dto: CreateProfissionaisDto) {
+    await this.empresas.validarEmpresaAtiva(empresaId);
+
+    return this.prisma.profissional.create({
+      data: { ...dto, empresaId }
+    })
   }
 
   findAll() {
@@ -16,7 +27,7 @@ export class ProfissionaisService {
     return `This action returns a #${id} profissionai`;
   }
 
-  update(id: number, updateProfissionaiDto: UpdateProfissionaiDto) {
+  update(id: number, updateProfissionaiDto: UpdateProfissionaisDto) {
     return `This action updates a #${id} profissionai`;
   }
 

@@ -1,15 +1,18 @@
 import { Controller, Get, Post, Body, Patch, Param, Delete } from '@nestjs/common';
 import { ProfissionaisService } from './profissionais.service.js';
-import { CreateProfissionaiDto } from './dto/create-profissionai.dto.js';
-import { UpdateProfissionaiDto } from './dto/update-profissionai.dto.js';
+import { CreateProfissionaisDto } from './dto/create-profissional.dto.js';
+import { UpdateProfissionaisDto } from './dto/update-profissional.dto.js';
+import { EmpresaId } from '../common/empresa-id.decorator.js';
 
 @Controller('profissionais')
 export class ProfissionaisController {
-  constructor(private readonly profissionaisService: ProfissionaisService) {}
+  constructor(private readonly profissionaisService: ProfissionaisService) { }
 
   @Post()
-  create(@Body() createProfissionaiDto: CreateProfissionaiDto) {
-    return this.profissionaisService.create(createProfissionaiDto);
+  create(@EmpresaId() empresaId: number, @Body() dto: CreateProfissionaisDto) {
+
+    return this.profissionaisService.create(empresaId, dto);
+
   }
 
   @Get()
@@ -23,8 +26,8 @@ export class ProfissionaisController {
   }
 
   @Patch(':id')
-  update(@Param('id') id: string, @Body() updateProfissionaiDto: UpdateProfissionaiDto) {
-    return this.profissionaisService.update(+id, updateProfissionaiDto);
+  update(@Param('id') id: string, @Body() updateProfissionaisDto: UpdateProfissionaisDto) {
+    return this.profissionaisService.update(+id, updateProfissionaisDto);
   }
 
   @Delete(':id')
