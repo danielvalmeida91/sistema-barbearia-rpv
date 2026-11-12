@@ -48,7 +48,27 @@ x-empresa-id: 1
 ###
 POST http://localhost:3000/profissionais
 Content-Type: application/json
+x-empresa-id: 2
 
 {
     "nome": "Daniel"
 }
+
+###
+GET http://localhost:3000/profissionais?ativos=true 
+Content-Type: application/json
+x-empresa-id: 1
+
+###
+PATCH http://localhost:3000/profissionais/6 
+Content-Type: application/json
+x-empresa-id: 1
+
+{
+    "ativo": false
+}
+
+###
+GET http://localhost:3000/profissionais/7
+Content-Type: application/json
+x-empresa-id: 1
