@@ -1,15 +1,15 @@
 import { Controller, Get, Post, Body, Patch, Param, Delete } from '@nestjs/common';
 import { AgendamentosService } from './agendamentos.service.js';
 import { CreateAgendamentoDto } from './dto/create-agendamento.dto.js';
-import { UpdateAgendamentoDto } from './dto/update-agendamento.dto.js';
+import { EmpresaId } from '../common/empresa-id.decorator.js';
 
 @Controller('agendamentos')
 export class AgendamentosController {
-  constructor(private readonly agendamentosService: AgendamentosService) {}
+  constructor(private readonly agendamentosService: AgendamentosService) { }
 
   @Post()
-  create(@Body() createAgendamentoDto: CreateAgendamentoDto) {
-    return this.agendamentosService.create(createAgendamentoDto);
+  create(@EmpresaId() empresaId: number, @Body() dto: CreateAgendamentoDto) {
+    return this.agendamentosService.create(empresaId, dto);
   }
 
   @Get()
@@ -22,10 +22,10 @@ export class AgendamentosController {
     return this.agendamentosService.findOne(+id);
   }
 
-  @Patch(':id')
-  update(@Param('id') id: string, @Body() updateAgendamentoDto: UpdateAgendamentoDto) {
-    return this.agendamentosService.update(+id, updateAgendamentoDto);
-  }
+  // @Patch(':id')
+  // update(@Param('id') id: string, @Body() updateAgendamentoDto: UpdateAgendamentoDto) {
+  //   return this.agendamentosService.update(+id, updateAgendamentoDto);
+  // }
 
   @Delete(':id')
   remove(@Param('id') id: string) {

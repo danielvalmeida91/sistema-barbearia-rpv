@@ -24,7 +24,7 @@ Content-Type: application/json
 ###
 GET http://localhost:3000/clientes
 Content-Type: application/json
-x-empresa-id: 3
+x-empresa-id: 1
 
 ###
 GET http://localhost:3000/clientes/2
@@ -48,7 +48,7 @@ x-empresa-id: 1
 ###
 POST http://localhost:3000/profissionais
 Content-Type: application/json
-x-empresa-id: 2
+x-empresa-id: 1
 
 {
     "nome": "Daniel"
@@ -79,25 +79,37 @@ x-empresa-id: 1
 ###
 POST http://localhost:3000/servicos
 Content-Type: application/json
-x-empresa-id: 2
+x-empresa-id: 1
 
 {
-    "nome": "Corte de Cabelo",
-    "preco": 35.00,
-    "duracaoMin": 40
+    "nome": "Barba",
+    "preco": 40.00,
+    "duracaoMin": 20
 }
 
 
 ### 
-PATCH http://localhost:3000/servicos/1
+PATCH http://localhost:3000/servicos/3
 Content-Type: application/json
-x-empresa-id: 2
+x-empresa-id: 1
 
 {
-    "nome": "Corte de Cabelo Asa Delta"
+    "preco": 45.00
 }
 
 ###
-GET http://localhost:3000/servicos/1
+GET http://localhost:3000/servicos
 Content-Type: application/json
-x-empresa-id: 2
+x-empresa-id: 1
+
+### 
+POST http://localhost:3000/agendamentos
+Content-Type: application/json
+x-empresa-id: 1
+
+{
+    "clienteId": 2,
+    "profissionalId": 1,
+    "inicio": "2026-11-13T21:00:00-03:00",
+    "servicoIds": [2,3]
+}
