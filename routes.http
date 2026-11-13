@@ -72,3 +72,32 @@ x-empresa-id: 1
 GET http://localhost:3000/profissionais/7
 Content-Type: application/json
 x-empresa-id: 1
+
+
+---
+
+###
+POST http://localhost:3000/servicos
+Content-Type: application/json
+x-empresa-id: 2
+
+{
+    "nome": "Corte de Cabelo",
+    "preco": 35.00,
+    "duracaoMin": 40
+}
+
+
+### 
+PATCH http://localhost:3000/servicos/1
+Content-Type: application/json
+x-empresa-id: 2
+
+{
+    "nome": "Corte de Cabelo Asa Delta"
+}
+
+###
+GET http://localhost:3000/servicos/1
+Content-Type: application/json
+x-empresa-id: 2

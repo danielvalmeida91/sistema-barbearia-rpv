@@ -54,7 +54,8 @@ model Profissional {
 model Servico {
   id           Int                  @id @default(autoincrement())
   nome         String
-  ativo        Boolean              @default(true)
+  preco        Float
+  duracaoMin   Int
   empresa      Empresa?             @relation(fields: [empresaId], references: [id])
   empresaId    Int?
   agendamentos AgendamentoServico[]
